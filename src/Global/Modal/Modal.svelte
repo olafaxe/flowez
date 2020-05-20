@@ -1,0 +1,98 @@
+<script>
+  export let modalHandler;
+  export let item;
+  import { currentFlow } from "../../stores.js";
+  import { createEventDispatcher, onDestroy } from "svelte";
+
+  const dispatch = createEventDispatcher();
+  const close = () => dispatch("close");
+  let modal;
+  const handle_keydown = e => {
+    if (e.key === "Escape") {
+      close();
+      return;
+    }
+    if (e.key === "Tab") {
+      // trap focus
+      const nodes = modal.querySelectorAll("*");
+      const tabbable = Array.from(nodes).filter(n => n.tabIndex >= 0);
+      let index = tabbable.indexOf(document.activeElement);
+      if (index === -1 && e.shiftKey) index = 0;
+      index += tabbable.length + (e.shiftKey ? -1 : 1);
+      index %= tabbable.length;
+      tabbable[index].focus();
+      e.preventDefault();
+    }
+  };
+  const previously_focused =
+    typeof document !== "undefined" && document.activeElement;
+  if (previously_focused) {
+    onDestroy(() => {
+      previously_focused.focus();
+    });
+  }
+
+  let selected;
+
+  const saveHandler = () => {
+    console.log(selected);
+    item.connectorTo = selected;
+    modalHandler(false);
+  };
+
+  const selectHandler = () => {
+    console.log(selected);
+  };
+
+  console.log(item);
+</script>
+
+<style>
+  .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(100vw - 4em);
+    max-width: 32em;
+    max-height: calc(100vh - 4em);
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    padding: 1em;
+    border-radius: 0.2em;
+    background: white;
+  }
+  button {
+    display: block;
+  }
+</style>
+
+<svelte:window on:keydown={handle_keydown} />
+
+<div class="modal-background" on:click={() => modalHandler(false)} />
+
+<div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
+  <form on:submit|preventDefault>
+    <h1>{item.name}</h1>
+    <h4>Connects to: {item.connectorTo}</h4>
+    <label for="connect_to" name="connect_to">Connect to:</label>
+    <select bind:value={selected} on:change={() => selectHandler()}>
+      <option value="">Select connection</option>
+      {#each $currentFlow as connection}
+        {#if connection !== item}
+          <option value={connection.name}>{connection.name}</option>
+        {/if}
+      {/each}
+
+    </select>
+    <input tyoe="submit" value="save changes" on:click={() => saveHandler()} />
+  </form>
+  <button on:click={() => modalHandler(false)}>Close</button>
+</div>
