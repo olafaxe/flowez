@@ -20,7 +20,7 @@
 <form
   on:submit|preventDefault={() => (name = '')}
   class="flowcreator--container">
-  <label for={flowName} id={flowName}>{flowName}</label>
+  <label for={flowName} id={flowName}>Create Node:</label>
   <input id={flowName} type="text" bind:value={name} />
   <input type="submit" on:click={() => flowFunction(name)} />
 </form>

@@ -12,6 +12,8 @@
 
   const modalHandler = condition => {
     open = condition;
+    let newFlow = $currentFlow;
+    currentFlow.set(newFlow);
   };
 </script>
 
@@ -23,7 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: auto;
+    width: 100px;
     margin: 0px 0px 10px 0px;
     padding: 5px 5px 5px 5px;
   }

@@ -1,7 +1,7 @@
 <script>
   export let modalHandler;
   export let item;
-  import { currentFlow } from "../../stores.js";
+  import { currentFlow, types } from "../../stores.js";
   import { createEventDispatcher, onDestroy } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -32,19 +32,20 @@
     });
   }
 
-  let selected;
+  let selectedConnection;
+  let selectedYesConnection;
+  let selectedNoConnection;
+  let selectedType;
 
   const saveHandler = () => {
-    console.log(selected);
-    item.connectorTo = selected;
+    if (item.type !== "decision") {
+      item.connectors = selectedConnection;
+    } else {
+    }
+    item.type = selectedType;
     modalHandler(false);
+    console.log(item);
   };
-
-  const selectHandler = () => {
-    console.log(selected);
-  };
-
-  console.log(item);
 </script>
 
 <style>
@@ -82,17 +83,45 @@
   <form on:submit|preventDefault>
     <h1>{item.name}</h1>
     <h4>Connects to: {item.connectorTo}</h4>
-    <label for="connect_to" name="connect_to">Connect to:</label>
-    <select bind:value={selected} on:change={() => selectHandler()}>
+    <label for="type_of" name="type_of">Type of:</label>
+    <select bind:value={selectedType}>
       <option value="">Select connection</option>
-      {#each $currentFlow as connection}
-        {#if connection !== item}
-          <option value={connection.name}>{connection.name}</option>
-        {/if}
+      {#each $types as type}
+        <option value={type}>{type}</option>
       {/each}
 
     </select>
-    <input tyoe="submit" value="save changes" on:click={() => saveHandler()} />
+    {#if item.type !== 'decision'}
+      <label for="connect_to" name="connect_to">Connect to:</label>
+      <select bind:value={selectedConnection}>
+        <option value="">Select connection</option>
+        {#each $currentFlow as connection}
+          {#if connection !== item}
+            <option value={connection.name}>{connection.name}</option>
+          {/if}
+        {/each}
+      </select>
+    {:else if item.type === 'decision'}
+      <label for="connect_to" name="connect_to">Choice Yes:</label>
+      <select bind:value={selectedYesConnection}>
+        <option value="">Select connection</option>
+        {#each $currentFlow as connection}
+          {#if connection !== item}
+            <option value={connection.name}>{connection.name}</option>
+          {/if}
+        {/each}
+      </select>
+      <label for="connect_to" name="connect_to">Choice No:</label>
+      <select bind:value={selectedNoConnection}>
+        <option value="">Select connection</option>
+        {#each $currentFlow as connection}
+          {#if connection !== item}
+            <option value={connection.name}>{connection.name}</option>
+          {/if}
+        {/each}
+      </select>
+    {/if}
   </form>
+  <input tyoe="submit" value="save changes" on:click={() => saveHandler()} />
   <button on:click={() => modalHandler(false)}>Close</button>
 </div>

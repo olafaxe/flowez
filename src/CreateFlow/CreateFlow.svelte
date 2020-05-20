@@ -14,83 +14,28 @@
     );
   };
 
-  const addTerminatorStartHandler = (name, from, to) => {
+  let Node = function(owner, id, name, type, connectors) {
+    (this.owner = owner), (this.id = id);
+    this.name = name;
+    this.type = type;
+    this.connectors = connectors;
+  };
+
+  const addNodeHandler = name => {
     if (name === "") {
       return;
     }
-    let terminatorStart = {
-      owner: flowchart._id,
-      id: ID(),
-      name: name,
-      type: "terminator",
-      connectorTo: [""]
-    };
-
-    currentFlow.update(state => [...state, terminatorStart]);
+    let owner = flowchart._id;
+    let id = ID();
+    let type = "";
+    let connectors = [];
+    let node = new Node(owner, id, name, type, connectors);
+    currentFlow.update(state => [...state, node]);
   };
-
-  const addProcessHandler = (name, from, to) => {
-    if (name === "") {
-      return;
-    }
-    let process = {
-      owner: flowchart._id,
-      id: ID(),
-      name: name,
-      type: "process",
-      connectorTo: [""]
-    };
-    currentFlow.update(state => [...state, process]);
-  };
-
-  const addDecisionHandler = (name, from, to) => {
-    if (name === "") {
-      return;
-    }
-    let decision = {
-      owner: flowchart._id,
-      id: ID(),
-      name: name,
-      type: "decision",
-      connectorTo: [""]
-    };
-    currentFlow.update(state => [...state, decision]);
-  };
-
-  const addTerminatorEndHandler = (name, from, to) => {
-    if (name === "") {
-      return;
-    }
-    let terminatorEnd = {
-      owner: flowchart._id,
-      id: ID(),
-      name: name,
-      type: "terminator",
-      connectorTo: ["end"]
-    };
-    currentFlow.update(state => [...state, terminatorEnd]);
-  };
-
-  console.log($currentFlow);
 </script>
 
 <style>
 
 </style>
 
-<CreateFlowForm
-  flowFunction={addTerminatorStartHandler}
-  {flowOptions}
-  flowName={'terminatorStart'} />
-<CreateFlowForm
-  flowFunction={addProcessHandler}
-  {flowOptions}
-  flowName={'process'} />
-<CreateFlowForm
-  flowFunction={addDecisionHandler}
-  {flowOptions}
-  flowName={'decision'} />
-<CreateFlowForm
-  flowFunction={addProcessHandler}
-  {flowOptions}
-  flowName={'terminatorEnd'} />
+<CreateFlowForm flowFunction={addNodeHandler} {flowOptions} />
