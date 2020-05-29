@@ -5,7 +5,7 @@
   import CreateFlowchart from "../CreateFlowchart/CreateFlowchart.svelte";
 
   onMount(async () => {
-    const res = await fetch(`http://localhost:8000/flowcharts`, {
+    const res = await fetch(`https://flowezdb.herokuapp.com/flowcharts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

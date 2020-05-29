@@ -15,7 +15,7 @@
     chart.name = n;
     chart.description = d;
     (async () => {
-      const res = await fetch(`http://localhost:8000/flowcharts`, {
+      const res = await fetch(`https://flowezdb.herokuapp.com/flowcharts`, {
         method: "POST",
         body: JSON.stringify(chart),
         headers: {
