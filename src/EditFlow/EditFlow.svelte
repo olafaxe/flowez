@@ -1,5 +1,6 @@
 <script>
   export let item;
+  export let arrayMaker;
   import { currentFlow } from "../stores.js";
   import Modal from "../Global/Modal/Modal.svelte";
 
@@ -37,12 +38,13 @@
 </style>
 
 {#if open}
-  <Modal {item} {modalHandler} />
+  <Modal {item} {modalHandler} {arrayMaker} />
 {/if}
 <div class="flow--item" on:click={() => modalHandler(true)}>
   <div class="flow--remove__item" on:click={() => removeHandler(item.id)}>
     x
   </div>
   <p>{item.type}</p>
+  <p>{item.id}</p>
   <p>{item.name}</p>
 </div>

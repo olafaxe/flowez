@@ -4,6 +4,13 @@ export const flowcharts = writable([]);
 
 export const currentFlow = writable([]);
 
+export const sortedFlow = writable([]);
+
 export const location = writable("");
 
-export const types = readable(["terminator", "process", "decision"]);
+export const types = writable([
+  "terminatorstart",
+  "process",
+  "decision",
+  "terminatorend",
+]);

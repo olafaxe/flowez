@@ -1,5 +1,6 @@
 <script>
-  import { fade, fly } from "svelte/transition";
+  import { fade, fly, draw } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
 </script>
 
 <style>
@@ -19,12 +20,21 @@
       id="markerArrow"
       markerWidth="13"
       markerHeight="13"
-      refX="4"
+      refX="6"
       refY="6"
       orient="auto">
-      <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+
+      <path
+        in:fly={{ x: 200, duration: 3500 }}
+        d="M2,2 L2,11 L10,6 L2,2"
+        style="fill: #000000;" />
     </marker>
   </defs>
 
-  <line x1="150" y1="0" x2="350" y2="0" class="arrow" />
+  <polyline
+    in:draw={{ duration: 3500, delay: 500, easing: quintOut }}
+    points="150,10 350,10"
+    fill="none"
+    stroke="black"
+    marker-end="url(#markerArrow)" />
 </svg>

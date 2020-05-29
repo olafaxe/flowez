@@ -1,4 +1,5 @@
 <script>
+  export let arrayMaker;
   export let modalHandler;
   export let item;
   import { currentFlow, types } from "../../stores.js";
@@ -33,18 +34,33 @@
   }
 
   let selectedConnection;
-  let selectedYesConnection;
-  let selectedNoConnection;
+  let selectedOtherConnection;
   let selectedType;
 
   const saveHandler = () => {
-    if (item.type !== "decision") {
-      item.connectors = selectedConnection;
-    } else {
+    if (selectedType !== "decision") {
+      let arr = selectedConnection;
+      item.connectors = arr;
+    }
+    if (selectedType === "decision") {
+      let sel = selectedConnection;
+      let arr = selectedOtherConnection;
+      item.connectors = sel;
+      item.otherConnector = arr;
     }
     item.type = selectedType;
+    arrayMaker();
     modalHandler(false);
-    console.log(item);
+  };
+  // console.log($currentFlow);
+
+  const filterSelectionHandler = () => {
+    $currentFlow.forEach(element => {
+      if (element.type === "terminatorstart") {
+        console.log("ele type: ", element.type);
+        types.set(["process", "decision", "terminatorend"]);
+      }
+    });
   };
 </script>
 
@@ -82,41 +98,41 @@
 <div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
   <form on:submit|preventDefault>
     <h1>{item.name}</h1>
-    <h4>Connects to: {item.connectorTo}</h4>
+    <h4>
+      Connects to: {item.connectors ? item.connectors[0] : 'No connection yet'}
+    </h4>
     <label for="type_of" name="type_of">Type of:</label>
-    <select bind:value={selectedType}>
-      <option value="">Select connection</option>
+    <select bind:value={selectedType} on:click={() => filterSelectionHandler()}>
+      <option value={item.type ? item.type : 'No type'}>
+        {item.type ? item.type : 'No type'}
+      </option>
       {#each $types as type}
         <option value={type}>{type}</option>
       {/each}
 
     </select>
-    {#if item.type !== 'decision'}
-      <label for="connect_to" name="connect_to">Connect to:</label>
-      <select bind:value={selectedConnection}>
-        <option value="">Select connection</option>
+    <label for="connect_to" name="connect_to">Connect to:</label>
+    <select bind:value={selectedConnection}>
+      <option
+        value={item.connectors !== '' ? item.connectors : 'No connection'}>
+        {item.connectors !== '' ? item.connectors : 'No connection'}
+      </option>
+      {#each $currentFlow as connection}
+        {#if connection !== item}
+          <option value={connection.id}>{connection.name}</option>
+        {/if}
+      {/each}
+    </select>
+    {#if item.type === 'decision'}
+      <label for="connect_to" name="connect_to">Other connector</label>
+      <select bind:value={selectedOtherConnection}>
+        <option
+          value={item.otherConnector !== '' ? item.otherConnector : 'No other connector'}>
+          {item.otherConnector !== '' ? item.otherConnector : 'No other connector'}
+        </option>
         {#each $currentFlow as connection}
           {#if connection !== item}
-            <option value={connection.name}>{connection.name}</option>
-          {/if}
-        {/each}
-      </select>
-    {:else if item.type === 'decision'}
-      <label for="connect_to" name="connect_to">Choice Yes:</label>
-      <select bind:value={selectedYesConnection}>
-        <option value="">Select connection</option>
-        {#each $currentFlow as connection}
-          {#if connection !== item}
-            <option value={connection.name}>{connection.name}</option>
-          {/if}
-        {/each}
-      </select>
-      <label for="connect_to" name="connect_to">Choice No:</label>
-      <select bind:value={selectedNoConnection}>
-        <option value="">Select connection</option>
-        {#each $currentFlow as connection}
-          {#if connection !== item}
-            <option value={connection.name}>{connection.name}</option>
+            <option value={connection.id}>{connection.name}</option>
           {/if}
         {/each}
       </select>

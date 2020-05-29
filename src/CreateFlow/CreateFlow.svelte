@@ -28,7 +28,7 @@
     let owner = flowchart._id;
     let id = ID();
     let type = "";
-    let connectors = [];
+    let connectors = "";
     let node = new Node(owner, id, name, type, connectors);
     currentFlow.update(state => [...state, node]);
   };
