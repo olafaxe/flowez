@@ -6,7 +6,7 @@
   import { navigate } from "svelte-routing";
 
   const deletePostHandler = id => {
-    fetch(`http://localhost:8000/flowcharts/${id}`, {
+    fetch(`https://flowezdb.herokuapp.com/flowcharts/${id}`, {
       method: "DELETE"
     });
 
