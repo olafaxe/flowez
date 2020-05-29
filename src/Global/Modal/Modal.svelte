@@ -57,7 +57,6 @@
   const filterSelectionHandler = () => {
     $currentFlow.forEach(element => {
       if (element.type === "terminatorstart") {
-        console.log("ele type: ", element.type);
         types.set(["process", "decision", "terminatorend"]);
       }
     });

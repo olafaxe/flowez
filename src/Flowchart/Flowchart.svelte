@@ -19,7 +19,6 @@
     location.set(e);
     navigate(`/flowcharts/${e}`, { replace: true });
   };
-  console.log(flowchart);
 </script>
 
 <style>

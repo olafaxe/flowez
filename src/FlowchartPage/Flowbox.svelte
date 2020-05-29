@@ -1,9 +1,9 @@
 <script>
   export let item;
 
-  const getXY = e => {
-    console.log(e);
-  };
+  // const getXY = e => {
+  //   console.log(e);
+  // };
 </script>
 
 <style>

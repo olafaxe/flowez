@@ -5,8 +5,6 @@
   import { currentFlow } from "../stores.js";
 
   let name;
-
-  console.log($currentFlow);
 </script>
 
 <style>

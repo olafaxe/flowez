@@ -21,17 +21,13 @@
     });
     for (let i = 0; i <= tempArr.length; i++) {
       if (arr[i]) {
-        console.log("first in arr: ", arr[i]);
         let obj = tempArr.filter(item => item.id === arr[i].connectors);
-        console.log("objekt ?: ", obj);
         if (obj.length > 0) {
           arr.push(...obj);
           sortedFlow.set(arr);
         }
       }
     }
-    console.log("temp arr: ", tempArr);
-    console.log("arr arr: ", arr);
   };
 </script>
 

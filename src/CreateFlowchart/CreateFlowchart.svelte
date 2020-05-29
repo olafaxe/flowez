@@ -9,8 +9,7 @@
     if (n === "" || d === "") {
       return;
     }
-    console.log(n);
-    console.log(d);
+
     let chart = {};
     chart.name = n;
     chart.description = d;
