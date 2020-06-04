@@ -1,4 +1,5 @@
 <script>
+  import { BASE_URL } from "../config.js";
   let description = "";
   let name = "";
 
@@ -14,7 +15,7 @@
     chart.name = n;
     chart.description = d;
     (async () => {
-      const res = await fetch(`https://flowezdb.herokuapp.com/flowcharts`, {
+      const res = await fetch(`${BASE_URL}/flowcharts`, {
         method: "POST",
         body: JSON.stringify(chart),
         headers: {

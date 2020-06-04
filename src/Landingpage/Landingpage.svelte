@@ -4,11 +4,7 @@
 </script>
 
 <style>
-  .arrow {
-    stroke: rgb(0, 0, 0);
-    stroke-width: 2;
-    marker-end: url(#markerArrow);
-  }
+
 </style>
 
 <h1 in:fly={{ x: -200, duration: 2000 }}>Flow-e-z</h1>

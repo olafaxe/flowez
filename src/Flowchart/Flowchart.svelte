@@ -1,12 +1,12 @@
 <script>
-  // your script goes here
   export let flowchart;
   import { flowcharts, location } from "../stores.js";
   import { fade } from "svelte/transition";
   import { navigate } from "svelte-routing";
+  import { BASE_URL } from "../config.js";
 
   const deletePostHandler = id => {
-    fetch(`https://flowezdb.herokuapp.com/flowcharts/${id}`, {
+    fetch(`${BASE_URL}/flowcharts/${id}`, {
       method: "DELETE"
     });
 
@@ -22,7 +22,6 @@
 </script>
 
 <style>
-  /* your styles go here */
   .flowchart {
     background-color: #ccccff;
     border: solid 1px #ccccf0;
@@ -43,9 +42,6 @@
   }
 </style>
 
-<!-- markup (zero or more items) goes here -->
-
-<!-- content here -->
 <div in:fade class="flowchart">
   <div class="flowchart--button_container">
     <button on:click={() => navigateHandler(flowchart._id)}>INSPECT</button>

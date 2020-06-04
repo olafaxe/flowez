@@ -14,7 +14,6 @@
       return;
     }
     if (e.key === "Tab") {
-      // trap focus
       const nodes = modal.querySelectorAll("*");
       const tabbable = Array.from(nodes).filter(n => n.tabIndex >= 0);
       let index = tabbable.indexOf(document.activeElement);
@@ -52,7 +51,6 @@
     arrayMaker();
     modalHandler(false);
   };
-  // console.log($currentFlow);
 
   const filterSelectionHandler = () => {
     $currentFlow.forEach(element => {

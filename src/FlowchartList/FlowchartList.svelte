@@ -3,9 +3,10 @@
   import { flowcharts } from "../stores.js";
   import Flowchart from "../Flowchart/Flowchart.svelte";
   import CreateFlowchart from "../CreateFlowchart/CreateFlowchart.svelte";
+  import { BASE_URL } from "../config.js";
 
   onMount(async () => {
-    const res = await fetch(`https://flowezdb.herokuapp.com/flowcharts`, {
+    const res = await fetch(`${BASE_URL}/flowcharts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -18,12 +19,7 @@
 </script>
 
 <style>
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    overflow: scroll;
-  }
+
 </style>
 
 <CreateFlowchart />
