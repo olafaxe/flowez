@@ -1,5 +1,6 @@
 <script>
   export let item;
+  console.log(item);
 </script>
 
 <style>
@@ -76,7 +77,7 @@
     <img class="flow--img__back" src="../images/backOther.png" alt="next" />
     <img class="flow--img__back" src="../images/nextOther.png" alt="next" />
   {/if}
-  {#if item.connectors && item.type !== 'decision'}
+  {#if item.connectors && item.type !== 'decision' && item.connectors !== 'No connection'}
     <img class="flow--img__next" src="../images/next.png" alt="next" />
   {/if}
 </div>

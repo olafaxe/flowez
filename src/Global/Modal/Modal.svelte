@@ -120,7 +120,7 @@
         {/if}
       {/each}
     </select>
-    {#if item.type === 'decision'}
+    {#if item.type === 'decision' || selectedType === 'decision'}
       <label for="connect_to" name="connect_to">Other connector</label>
       <select bind:value={selectedOtherConnection}>
         <option
